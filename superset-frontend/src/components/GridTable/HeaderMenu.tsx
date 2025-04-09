@@ -21,7 +21,8 @@ import { styled, t } from '@superset-ui/core';
 import type { Column, ColumnPinnedType, GridApi } from 'ag-grid-community';
 
 import { Icons } from 'src/components/Icons';
-import { MenuDotsDropdown, DropdownProps } from 'src/components/Dropdown';
+import { MenuDotsDropdown } from 'src/components';
+import type { DropdownProps } from 'src/components/Dropdown/types';
 import { Menu } from 'src/components/Menu';
 import copyTextToClipboard from 'src/utils/copy';
 import { PIVOT_COL_ID } from './constants';
@@ -41,7 +42,7 @@ type Params = {
   onVisibleChange: DropdownProps['onOpenChange'];
 };
 
-const HeaderMenu: React.FC<Params> = ({
+export const HeaderMenu: React.FC<Params> = ({
   colId,
   api,
   pinnedLeft,
@@ -242,5 +243,3 @@ const HeaderMenu: React.FC<Params> = ({
     />
   );
 };
-
-export default HeaderMenu;

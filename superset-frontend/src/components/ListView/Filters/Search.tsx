@@ -26,10 +26,8 @@ import {
 
 import { t, styled, useTheme, css } from '@superset-ui/core';
 import { Icons } from 'src/components/Icons';
-import { Input as AntdInput } from 'src/components/Input';
 import { SELECT_WIDTH } from 'src/components/ListView/utils';
-import { FormLabel } from 'src/components/Form';
-import InfoTooltip from 'src/components/InfoTooltip';
+import { FormLabel, Input, InfoTooltip } from 'src/components';
 import { BaseFilter, FilterHandler } from './Base';
 
 interface SearchHeaderProps extends BaseFilter {
@@ -43,7 +41,7 @@ const Container = styled.div`
   width: ${SELECT_WIDTH}px;
 `;
 
-const StyledInput = styled(AntdInput)`
+const StyledInput = styled(Input)`
   border-radius: ${({ theme }) => theme.sizeUnit}px;
 `;
 

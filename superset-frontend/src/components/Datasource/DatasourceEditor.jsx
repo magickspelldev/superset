@@ -20,9 +20,21 @@ import rison from 'rison';
 import { PureComponent, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Radio } from 'src/components/Radio';
-import Card from 'src/components/Card';
-import Alert from 'src/components/Alert';
-import Badge from 'src/components/Badge';
+import {
+  Alert,
+  Badge,
+  Card,
+  Select,
+  AsyncSelect,
+  Button,
+  CertifiedBadge,
+  DatabaseSelector,
+  EditableTitle,
+  FormLabel,
+  Row,
+  Col,
+  Icons,
+} from 'src/components';
 import {
   css,
   isFeatureEnabled,
@@ -35,24 +47,16 @@ import {
   withTheme,
   getClientErrorObject,
 } from '@superset-ui/core';
-import { Row, Col } from 'src/components/Grid';
-import { Select, AsyncSelect } from 'src/components';
-import { FormLabel } from 'src/components/Form';
-import Button from 'src/components/Button';
 import Tabs from 'src/components/Tabs';
-import CertifiedBadge from 'src/components/CertifiedBadge';
 import WarningIconWithTooltip from 'src/components/WarningIconWithTooltip';
-import DatabaseSelector from 'src/components/DatabaseSelector';
 import Label from 'src/components/Label';
 import Loading from 'src/components/Loading';
 import TableSelector from 'src/components/TableSelector';
-import EditableTitle from 'src/components/EditableTitle';
 import CheckboxControl from 'src/explore/components/controls/CheckboxControl';
 import TextControl from 'src/explore/components/controls/TextControl';
 import TextAreaControl from 'src/explore/components/controls/TextAreaControl';
 import SpatialControl from 'src/explore/components/controls/SpatialControl';
 import withToasts from 'src/components/MessageToasts/withToasts';
-import { Icons } from 'src/components/Icons';
 import CurrencyControl from 'src/explore/components/controls/CurrencyControl';
 import CollectionTable from './CollectionTable';
 import Fieldset from './Fieldset';

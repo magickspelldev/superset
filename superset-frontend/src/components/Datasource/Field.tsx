@@ -19,8 +19,7 @@
 import { useCallback, ReactNode, ReactElement, cloneElement } from 'react';
 
 import { css, SupersetTheme } from '@superset-ui/core';
-import { Tooltip } from 'src/components/Tooltip';
-import { FormItem, FormLabel } from 'src/components/Form';
+import { FormItem, FormLabel, Tooltip } from 'src/components';
 
 const formItemInlineCss = css`
   .antd5-form-item-control-input-content {

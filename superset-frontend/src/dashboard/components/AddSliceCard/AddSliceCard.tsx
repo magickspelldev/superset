@@ -31,9 +31,7 @@ import {
 
 import { t, isFeatureEnabled, FeatureFlag, css } from '@superset-ui/core';
 import ImageLoader from 'src/components/ListViewCard/ImageLoader';
-import { usePluginContext } from 'src/components/DynamicPlugins';
-import { Tooltip } from 'src/components/Tooltip';
-import { GenericLink } from 'src/components/GenericLink/GenericLink';
+import { GenericLink, Tooltip, usePluginContext } from 'src/components';
 import { Theme } from '@emotion/react';
 
 const FALLBACK_THUMBNAIL_URL = '/static/assets/images/chart-card-fallback.svg';

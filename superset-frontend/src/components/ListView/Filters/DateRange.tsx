@@ -25,12 +25,10 @@ import {
 } from 'react';
 
 import { styled, t } from '@superset-ui/core';
-import { RangePicker } from 'src/components/DatePicker';
-import { FormLabel } from 'src/components/Form';
 import { extendedDayjs } from 'src/utils/dates';
 import { Dayjs } from 'dayjs';
 import Loading from 'src/components/Loading';
-import { AntdThemeProvider } from 'src/components/AntdThemeProvider';
+import { AntdThemeProvider, FormLabel, RangePicker } from 'src/components';
 import { useLocale } from 'src/hooks/useLocale';
 import { BaseFilter, FilterHandler } from './Base';
 

@@ -18,8 +18,7 @@
  */
 import { useState, useMemo } from 'react';
 import { styled, t } from '@superset-ui/core';
-import { Select } from 'src/components';
-import { FormLabel } from 'src/components/Form';
+import { FormLabel, Select } from 'src/components';
 import { SELECT_WIDTH } from './utils';
 import { CardSortSelectOption, SortColumn } from './types';
 

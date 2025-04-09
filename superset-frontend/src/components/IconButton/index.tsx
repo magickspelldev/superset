@@ -19,8 +19,8 @@
 
 // eslint-disable-next-line
 import Typography from 'src/components/Typography';
-import { Tooltip } from 'src/components/Tooltip';
-import Card, { CardProps } from 'src/components/Card';
+import { Card, Tooltip } from 'src/components';
+import { CardProps } from 'src/components/Card/types';
 import { Icons } from 'src/components/Icons';
 import { SupersetTheme, css } from '@superset-ui/core';
 
@@ -51,7 +51,7 @@ const IconButton: React.FC<IconButtonProps> = ({
   const renderIcon = () => {
     const iconContent = icon ? (
       <img
-        src={icon}
+        src={icon as string}
         alt={altText || buttonText}
         css={css`
           width: 100%;

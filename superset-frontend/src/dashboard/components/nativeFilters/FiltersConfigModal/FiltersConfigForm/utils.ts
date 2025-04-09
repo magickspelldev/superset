@@ -17,7 +17,7 @@
  * under the License.
  */
 import { flatMapDeep } from 'lodash';
-import { FormInstance } from 'src/components/Form';
+import type { FormInstance } from 'src/components/Form/types';
 import { useState, useCallback } from 'react';
 import { CustomControlItem, Dataset } from '@superset-ui/chart-controls';
 import { Column, ensureIsArray, GenericDataType } from '@superset-ui/core';

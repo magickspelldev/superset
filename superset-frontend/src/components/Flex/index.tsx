@@ -18,9 +18,7 @@
  */
 
 import { Flex as AntdFlex } from 'antd-v5';
-import { ComponentProps } from 'react';
-
-export type FlexProps = ComponentProps<typeof AntdFlex>;
+import type { FlexProps } from './types';
 
 export function Flex(props: FlexProps) {
   return <AntdFlex {...props} />;
