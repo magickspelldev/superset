@@ -1,0 +1,52 @@
+x-superset-volumes:
+  &superset-volumes # /app/pythonpath_docker will be appended to the PYTHONPATH in the final container
+  - ./docker:/app/docker
+  - superset_home:/app/superset_home
+
+x-common-build: &common-build
+  context: .
+  target: dev
+  cache_from:
+    - apache/superset-cache:3.10-slim-bookworm
+
+services:
+    db:
+        env_file:
+          - path: docker/.env # default
+            required: true
+          - path: docker/.env-local # optional override
+            required: false
+        image: postgres:15
+        container_name: superset_db
+        restart: unless-stopped
+        ports:
+          - "127.0.0.1:6432:5432"
+        extra_hosts:
+          - "host.docker.internal:host-gateway"
+        volumes:
+          - db_home:/var/lib/postgresql/data
+          - ./docker/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+
+    superset-init:
+      container_name: superset_init
+      build:
+        <<: *common-build
+      command: ["/app/docker/docker-init.sh"]
+      env_file:
+        - path: docker/.env # default
+          required: true
+        - path: docker/.env-local # optional override
+          required: false
+      # depends_on: *superset-depends-on
+      user: "root"
+      extra_hosts:
+        - "host.docker.internal:host-gateway"
+      volumes: *superset-volumes
+      healthcheck:
+        disable: true
+
+volumes:
+  superset_home:
+    external: false
+  db_home:
+    external: false

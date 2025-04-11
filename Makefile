@@ -115,3 +115,12 @@ report-celery-beat:
 
 admin-user:
 	superset fab create-admin
+
+ubuntu-init-db:
+	docker compose -f docker-compose.ubuntu.init.yaml up
+
+ubuntu-start-dev:
+	docker compose -f docker-compose.ubuntu.start.yaml up
+
+ubuntu-clean-db:
+	docker volume rm superset_db_home
