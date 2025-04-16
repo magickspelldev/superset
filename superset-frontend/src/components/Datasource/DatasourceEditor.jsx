@@ -852,7 +852,7 @@ class DatasourceEditor extends PureComponent {
       this.state.datasource.metrics?.forEach(
         metric =>
           metric.currency?.symbol &&
-          new Intl.NumberFormat('en-US', {
+          new Intl.NumberFormat('ru-RU', {
             style: 'currency',
             currency: metric.currency.symbol,
           }),

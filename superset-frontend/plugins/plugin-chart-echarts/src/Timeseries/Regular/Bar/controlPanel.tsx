@@ -282,6 +282,7 @@ const config: ControlPanelConfig = {
     sections.advancedAnalyticsControls,
     sections.annotationsAndLayersControls,
     sections.forecastIntervalControls,
+    sections.customeBbrControlConfig,
     {
       label: t('Chart Orientation'),
       expanded: true,

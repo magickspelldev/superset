@@ -639,6 +639,9 @@ const config: ControlPanelConfig = {
       }),
       visibility: isAggMode,
     },
+    {
+      ...sections.customeBbrControlConfig,
+    },
   ],
   formDataOverrides: formData => ({
     ...formData,

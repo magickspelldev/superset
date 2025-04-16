@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useEffect } from 'react';
 import { MinusSquareOutlined, PlusSquareOutlined } from '@ant-design/icons';
 import {
   AdhocMetric,
@@ -155,6 +155,7 @@ export default function PivotTableChart(props: PivotTableProps) {
     dateFormatters,
     onContextMenu,
     timeGrainSqla,
+    formData,
   } = props;
 
   const theme = useTheme();
@@ -243,6 +244,8 @@ export default function PivotTableChart(props: PivotTableProps) {
     }),
     [metricNames],
   );
+
+  const switchTableSpoilerLocal = formData?.switchTableSpoiler ?? true;
 
   const [rows, cols] = useMemo(() => {
     let [rows_, cols_] = transposePivot
@@ -391,8 +394,12 @@ export default function PivotTableChart(props: PivotTableProps) {
         return;
       }
 
-      const isActiveFilterValue = (key: string, val: DataRecordValue) =>
-        !!selectedFilters && selectedFilters[key]?.includes(val);
+      const isActiveFilterValue = (key: string, val: DataRecordValue) => {
+        if (switchTableSpoilerLocal) {
+          return true;
+        }
+        return !!selectedFilters && selectedFilters[key]?.includes(val);
+      };
 
       const filtersCopy = { ...filters };
       delete filtersCopy[METRIC_KEY];
@@ -427,7 +434,7 @@ export default function PivotTableChart(props: PivotTableProps) {
       }
       handleChange(updatedFilters);
     },
-    [emitCrossFilters, selectedFilters, handleChange],
+    [emitCrossFilters, selectedFilters, handleChange, switchTableSpoilerLocal],
   );
 
   const tableOptions = useMemo(
@@ -556,6 +563,7 @@ export default function PivotTableChart(props: PivotTableProps) {
           subtotalOptions={subtotalOptions}
           namesMapping={verboseMap}
           onContextMenu={handleContextMenu}
+          formData={formData}
         />
       </PivotTableWrapper>
     </Styles>

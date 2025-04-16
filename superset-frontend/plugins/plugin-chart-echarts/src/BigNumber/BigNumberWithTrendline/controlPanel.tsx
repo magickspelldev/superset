@@ -126,6 +126,25 @@ const config: ControlPanelConfig = {
       ],
     },
     {
+      label: t('Кастомные настройки ББР'),
+      expanded: true,
+      tabOverride: 'data',
+      controlSetRows: [
+        [
+          {
+            name: 'switch_table_spoiler',
+            config: {
+              type: 'CheckboxControl',
+              label: t('Свернуть таблицы'),
+              renderTrigger: true,
+              default: true,
+              description: t('Чекбокс позволяет сворачивать табличные части'),
+            },
+          },
+        ],
+      ],
+    },
+    {
       label: t('Chart Options'),
       expanded: true,
       controlSetRows: [

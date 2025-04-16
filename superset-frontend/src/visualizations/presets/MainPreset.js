@@ -82,6 +82,7 @@ import { PivotTableChartPlugin as PivotTableChartPluginV2 } from '@superset-ui/p
 import { HandlebarsChartPlugin } from '@superset-ui/plugin-chart-handlebars';
 import { FilterPlugins } from 'src/constants';
 import TimeTableChartPlugin from '../TimeTable';
+// import { SupersetHandsontablePlugin } from 'superset-handsontable-plugin';
 
 export default class MainPreset extends Preset {
   constructor() {
@@ -99,6 +100,10 @@ export default class MainPreset extends Preset {
       name: 'Legacy charts',
       presets: [new DeckGLChartPreset()],
       plugins: [
+        // todo проверка плагинов
+        // new SupersetHandsontablePlugin().configure({key:
+        //   'superset-handsontable-plugin'
+        // }),
         new AreaChartPlugin().configure({ key: 'area' }),
         new BarChartPlugin().configure({ key: 'bar' }),
         new BigNumberChartPlugin().configure({ key: 'big_number' }),

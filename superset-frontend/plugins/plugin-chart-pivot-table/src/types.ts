@@ -34,7 +34,7 @@ import { ColorFormatters } from '@superset-ui/chart-controls';
 
 export interface PivotTableStylesProps {
   height: number;
-  width: number | string;
+  width: number;
   margin: number;
 }
 
@@ -86,7 +86,6 @@ interface PivotTableCustomizeProps {
   ) => void;
   timeGrainSqla?: TimeGranularity;
   time_grain_sqla?: TimeGranularity;
-  granularity_sqla?: string;
 }
 
 export type PivotTableQueryFormData = QueryFormData &
@@ -96,4 +95,8 @@ export type PivotTableQueryFormData = QueryFormData &
 export type PivotTableProps = PivotTableStylesProps &
   PivotTableCustomizeProps & {
     data: DataRecord[];
+    formData?: QueryFormData;
+    slice?: {
+      switch_table_spoiler?: boolean;
+    };
   };

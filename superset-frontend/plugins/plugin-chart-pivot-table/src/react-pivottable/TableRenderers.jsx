@@ -62,23 +62,75 @@ function displayHeaderCell(
 export class TableRenderer extends Component {
   constructor(props) {
     super(props);
-
     // We need state to record which entries are collapsed and which aren't.
     // This is an object with flat-keys indicating if the corresponding rows
     // should be collapsed.
-    this.state = { collapsedRows: {}, collapsedCols: {} };
+    this.state = { 
+      collapsedRows: {}, 
+      collapsedCols: {} 
+    };
 
     this.clickHeaderHandler = this.clickHeaderHandler.bind(this);
     this.clickHandler = this.clickHandler.bind(this);
   }
 
+  componentDidMount() {
+    const { formData } = this.props;
+    if (formData?.switchTableSpoiler) {
+      this.collapseAll();
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.rows !== this.props.rows || prevProps.cols !== this.props.cols) {
+      this.collapseAll();
+    }
+  }
+
+  collapseAll() {
+    const { rows, cols, data } = this.props;
+    if (rows && rows.length > 0) {
+      const collapsedRows = {};
+      for (let i = 0; i < rows.length - 1; i++) {
+        const rowAttr = rows[i];
+        const uniqueValues = new Set();
+        data.forEach(item => {
+          if (item[rowAttr] !== undefined) {
+            uniqueValues.add(item[rowAttr]);
+          }
+        });
+        uniqueValues.forEach(value => {
+          const key = flatKey([value]);
+          collapsedRows[key] = true;
+        });
+      }
+      this.setState({ collapsedRows });
+    }
+
+    if (cols && cols.length > 0) {
+      const collapsedCols = {};
+      for (let i = 0; i < cols.length - 1; i++) {
+        const colAttr = cols[i];
+        const uniqueValues = new Set();
+        data.forEach(item => {
+          if (item[colAttr] !== undefined) {
+            uniqueValues.add(item[colAttr]);
+          }
+        });
+        uniqueValues.forEach(value => {
+          const key = flatKey([value]);
+          collapsedCols[key] = true;
+        });
+      }
+      this.setState({ collapsedCols });
+    }
+  }
+
   getBasePivotSettings() {
     // One-time extraction of pivot settings that we'll use throughout the render.
-
     const { props } = this;
     const colAttrs = props.cols;
     const rowAttrs = props.rows;
-
     const tableOptions = {
       rowTotals: true,
       colTotals: true,
@@ -841,15 +893,16 @@ export class TableRenderer extends Component {
   }
 
   visibleKeys(keys, collapsed, numAttrs, subtotalDisplay) {
+    // если нет стейта свернутых - то все свернуто по дефолту
+    const effectiveCollapsed = collapsed || {};
+    
     return keys.filter(
       key =>
-        // Is the key hidden by one of its parents?
-        !key.some((k, j) => collapsed[flatKey(key.slice(0, j))]) &&
+        !key.some((k, j) => effectiveCollapsed[flatKey(key.slice(0, j))]) &&
         // Leaf key.
         (key.length === numAttrs ||
-          // Children hidden. Must show total.
-          flatKey(key) in collapsed ||
-          // Don't hide totals.
+          flatKey(key) in effectiveCollapsed ||
+          // todo прятать ли сабтоталы
           !subtotalDisplay.hideOnExpand),
     );
   }

@@ -32,7 +32,7 @@ interface CurrencyFormatter {
 }
 
 export const getCurrencySymbol = (currency: Partial<Currency>) =>
-  new Intl.NumberFormat('en-US', {
+  new Intl.NumberFormat('ru-RU', {
     style: 'currency',
     currency: currency.symbol,
   })
@@ -50,7 +50,7 @@ class CurrencyFormatter extends ExtensibleFunction {
     super((value: number) => this.format(value));
     this.d3Format = config.d3Format || NumberFormats.SMART_NUMBER;
     this.currency = config.currency;
-    this.locale = config.locale || 'en-US';
+    this.locale = config.locale || 'ru-RU';
   }
 
   hasValidCurrency() {
