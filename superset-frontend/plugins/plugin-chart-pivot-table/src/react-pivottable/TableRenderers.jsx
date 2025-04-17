@@ -65,9 +65,9 @@ export class TableRenderer extends Component {
     // We need state to record which entries are collapsed and which aren't.
     // This is an object with flat-keys indicating if the corresponding rows
     // should be collapsed.
-    this.state = { 
-      collapsedRows: {}, 
-      collapsedCols: {} 
+    this.state = {
+      collapsedRows: {},
+      collapsedCols: {},
     };
 
     this.clickHeaderHandler = this.clickHeaderHandler.bind(this);
@@ -75,6 +75,7 @@ export class TableRenderer extends Component {
   }
 
   componentDidMount() {
+    console.log('[componentDidMount]');
     const { formData } = this.props;
     if (formData?.switchTableSpoiler) {
       this.collapseAll();
@@ -82,16 +83,32 @@ export class TableRenderer extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.rows !== this.props.rows || prevProps.cols !== this.props.cols) {
-      this.collapseAll();
+    const { formData } = this.props;
+    if (
+      formData?.switchTableSpoiler !== prevProps.formData?.switchTableSpoiler ||
+      prevProps.rows !== this.props.rows ||
+      prevProps.cols !== this.props.cols
+    ) {
+      if (formData?.switchTableSpoiler) {
+        this.collapseAll();
+      } else {
+        this.expandAll();
+      }
     }
+  }
+
+  expandAll() {
+    this.setState({
+      collapsedRows: {},
+      collapsedCols: {},
+    });
   }
 
   collapseAll() {
     const { rows, cols, data } = this.props;
     if (rows && rows.length > 0) {
       const collapsedRows = {};
-      for (let i = 0; i < rows.length - 1; i++) {
+      for (let i = 0; i < rows.length - 1; i += 1) {
         const rowAttr = rows[i];
         const uniqueValues = new Set();
         data.forEach(item => {
@@ -109,7 +126,7 @@ export class TableRenderer extends Component {
 
     if (cols && cols.length > 0) {
       const collapsedCols = {};
-      for (let i = 0; i < cols.length - 1; i++) {
+      for (let i = 0; i < cols.length - 1; i += 1) {
         const colAttr = cols[i];
         const uniqueValues = new Set();
         data.forEach(item => {
@@ -895,7 +912,6 @@ export class TableRenderer extends Component {
   visibleKeys(keys, collapsed, numAttrs, subtotalDisplay) {
     // если нет стейта свернутых - то все свернуто по дефолту
     const effectiveCollapsed = collapsed || {};
-    
     return keys.filter(
       key =>
         !key.some((k, j) => effectiveCollapsed[flatKey(key.slice(0, j))]) &&

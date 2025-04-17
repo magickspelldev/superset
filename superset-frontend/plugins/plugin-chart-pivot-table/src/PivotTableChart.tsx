@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import { useCallback, useMemo, useEffect } from 'react';
+import { useCallback, useMemo } from 'react';
 import { MinusSquareOutlined, PlusSquareOutlined } from '@ant-design/icons';
 import {
   AdhocMetric,
@@ -245,7 +245,7 @@ export default function PivotTableChart(props: PivotTableProps) {
     [metricNames],
   );
 
-  const switchTableSpoilerLocal = formData?.switchTableSpoiler ?? true;
+  // const switchTableSpoilerLocal = formData?.switchTableSpoiler ?? true;
 
   const [rows, cols] = useMemo(() => {
     let [rows_, cols_] = transposePivot
@@ -394,12 +394,8 @@ export default function PivotTableChart(props: PivotTableProps) {
         return;
       }
 
-      const isActiveFilterValue = (key: string, val: DataRecordValue) => {
-        if (switchTableSpoilerLocal) {
-          return true;
-        }
-        return !!selectedFilters && selectedFilters[key]?.includes(val);
-      };
+      const isActiveFilterValue = (key: string, val: DataRecordValue) =>
+        !!selectedFilters && selectedFilters[key]?.includes(val);
 
       const filtersCopy = { ...filters };
       delete filtersCopy[METRIC_KEY];
@@ -434,7 +430,7 @@ export default function PivotTableChart(props: PivotTableProps) {
       }
       handleChange(updatedFilters);
     },
-    [emitCrossFilters, selectedFilters, handleChange, switchTableSpoilerLocal],
+    [emitCrossFilters, selectedFilters, handleChange],
   );
 
   const tableOptions = useMemo(
