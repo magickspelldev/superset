@@ -162,10 +162,6 @@ const SliceHeader: FC<SliceHeaderProps> = ({
   const dashboardPageId = useContext(DashboardPageIdContext);
   const [headerTooltip, setHeaderTooltip] = useState<ReactNode | null>(null);
   const headerRef = useRef<HTMLDivElement>(null);
-  // const [switchTableSpoiler, setSwitchTableSpoiler] = useState(
-  //   formData?.switch_table_spoiler ?? true,
-  //   // true,
-  // );
   const crossFilterValue = useSelector<RootState, any>(
     state => state.dataMask[slice?.slice_id]?.filterState?.value,
   );
@@ -191,17 +187,6 @@ const SliceHeader: FC<SliceHeaderProps> = ({
   }, [sliceName, width, height, canExplore]);
 
   const exploreUrl = `/explore/?dashboard_page_id=${dashboardPageId}&slice_id=${slice.slice_id}`;
-
-  // const handleToggleTableSpoiler = () => {
-  //   console.log('[slice]');
-  //   console.log(slice);
-  //   const newValue = !switchTableSpoiler;
-  //   setSwitchTableSpoiler(newValue);
-
-  //   // if (formData) {
-  //   //   formData.switch_table_spoiler = newValue;
-  //   // }
-  // };
 
   return (
     <ChartHeaderStyles data-test="slice-header" ref={innerRef}>
@@ -248,15 +233,6 @@ const SliceHeader: FC<SliceHeaderProps> = ({
         )}
       </div>
       <div className="header-controls">
-        {/* {formData?.viz_type.includes('pivot_table') && (
-          <div
-            role="table-switcher"
-            onClick={handleToggleTableSpoiler}
-            style={{ cursor: 'pointer' }}
-          >
-            {switchTableSpoiler ? 'Развернуть таблицу' : 'Свернуть таблицу'}
-          </div>
-        )} */}
         {!editMode && (
           <>
             {SliceHeaderExtension && (

@@ -22,6 +22,7 @@ import { t } from '@superset-ui/core';
 import PropTypes from 'prop-types';
 import { PivotData, flatKey } from './utilities';
 import { Styles } from './Styles';
+import CheckboxControl from '../../../../src/explore/components/controls/CheckboxControl';
 
 const parseLabel = value => {
   if (typeof value === 'string') {
@@ -61,11 +62,14 @@ function displayHeaderCell(
 
 export class TableRenderer extends Component {
   constructor(props) {
+    console.log("[props]");
+    console.log(props);
     super(props);
     // We need state to record which entries are collapsed and which aren't.
     // This is an object with flat-keys indicating if the corresponding rows
     // should be collapsed.
     this.state = {
+      switchTableSpoiler: props.formData?.switchTableSpoiler ?? true,
       collapsedRows: {},
       collapsedCols: {},
     };
@@ -80,6 +84,7 @@ export class TableRenderer extends Component {
     if (formData?.switchTableSpoiler) {
       this.collapseAll();
     }
+    console.log(formData?.switchTableSpoiler);
   }
 
   componentDidUpdate(prevProps) {
@@ -927,6 +932,10 @@ export class TableRenderer extends Component {
     return document.contains(document.querySelector('.dashboard--editing'));
   }
 
+  isDashboardMode() {
+    return document.contains(document.querySelector('.dashboard'));
+  }
+
   render() {
     if (this.cachedProps !== this.props) {
       this.cachedProps = this.props;
@@ -969,6 +978,44 @@ export class TableRenderer extends Component {
 
     return (
       <Styles isDashboardEditMode={this.isDashboardEditMode()}>
+        {this.isDashboardMode() && (
+          <>
+            <CheckboxControl
+              label={"свернуть таблицу"}
+              value={this.state.switchTableSpoiler}
+              onChange={() => {this.setState(
+                { switchTableSpoiler: !this.state.switchTableSpoiler },
+                () => {
+                  if (this.state.switchTableSpoiler) {
+                    this.collapseAll();
+                  } else {
+                    this.expandAll();
+                  }
+                },
+              );}}
+            />
+            <div className="control-label">
+              <input
+                type="checkbox"
+                checked={this.state.switchTableSpoiler}
+                onChange={e => {
+                  this.setState(
+                    { switchTableSpoiler: e.target.checked },
+                    () => {
+                      if (this.state.switchTableSpoiler) {
+                        this.collapseAll();
+                      } else {
+                        this.expandAll();
+                      }
+                    },
+                  );
+                }}
+              />
+              <span className="slider round" />
+              <span style={{ marginLeft: '8px' }}>Свернуть таблицу</span>
+            </div>
+          </>
+        )}
         <table className="pvtTable" role="grid">
           <thead>
             {colAttrs.map((c, j) =>

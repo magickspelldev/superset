@@ -245,6 +245,8 @@ export default function PivotTableChart(props: PivotTableProps) {
     [metricNames],
   );
 
+  console.log("[formData][PivotTableChart]");
+  console.log(formData);
   // const switchTableSpoilerLocal = formData?.switchTableSpoiler ?? true;
 
   const [rows, cols] = useMemo(() => {
