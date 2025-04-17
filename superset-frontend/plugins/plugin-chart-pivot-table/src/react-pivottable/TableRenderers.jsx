@@ -62,8 +62,6 @@ function displayHeaderCell(
 
 export class TableRenderer extends Component {
   constructor(props) {
-    console.log("[props]");
-    console.log(props);
     super(props);
     // We need state to record which entries are collapsed and which aren't.
     // This is an object with flat-keys indicating if the corresponding rows
@@ -979,12 +977,14 @@ export class TableRenderer extends Component {
     return (
       <Styles isDashboardEditMode={this.isDashboardEditMode()}>
         {this.isDashboardMode() && (
-          <>
-            <CheckboxControl
-              label={"свернуть таблицу"}
-              value={this.state.switchTableSpoiler}
-              onChange={() => {this.setState(
-                { switchTableSpoiler: !this.state.switchTableSpoiler },
+          <CheckboxControl
+            label="свернуть таблицу"
+            value={this.state.switchTableSpoiler}
+            onChange={() => {
+              this.setState(
+                prevState => ({
+                  switchTableSpoiler: !prevState.switchTableSpoiler,
+                }),
                 () => {
                   if (this.state.switchTableSpoiler) {
                     this.collapseAll();
@@ -992,29 +992,9 @@ export class TableRenderer extends Component {
                     this.expandAll();
                   }
                 },
-              );}}
-            />
-            <div className="control-label">
-              <input
-                type="checkbox"
-                checked={this.state.switchTableSpoiler}
-                onChange={e => {
-                  this.setState(
-                    { switchTableSpoiler: e.target.checked },
-                    () => {
-                      if (this.state.switchTableSpoiler) {
-                        this.collapseAll();
-                      } else {
-                        this.expandAll();
-                      }
-                    },
-                  );
-                }}
-              />
-              <span className="slider round" />
-              <span style={{ marginLeft: '8px' }}>Свернуть таблицу</span>
-            </div>
-          </>
+              );
+            }}
+          />
         )}
         <table className="pvtTable" role="grid">
           <thead>
