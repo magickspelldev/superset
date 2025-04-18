@@ -29,7 +29,7 @@ import {
 
 import { format } from 'd3-format';
 import { styled, CurrencyFormatter } from '@superset-ui/core';
-import { use, init, EChartsType } from 'echarts/core';
+import { use, init, EChartsType, color } from 'echarts/core';
 import {
   SankeyChart,
   PieChart,
@@ -148,6 +148,15 @@ function Echart(
       chartRef.current?.getZr().on(name, handler);
     });
 
+    const getColor = (color: {
+      r: number;
+      g: number;
+      b: number;
+      a: number;
+    }): string => {
+      const { r, g, b, a } = color;
+      return a === 1 ? `rgb(${r},${g},${b})` : `rgba(${r},${g},${b},${a})`;
+    };
     const currencySymbols: Record<string, string> = {
       RUB: '₽',
       USD: '$',
@@ -161,13 +170,15 @@ function Echart(
         '[Original series data]',
         (echartOptions as any).series?.[0]?.data,
       );
-      const { r, g, b, a } = formData.labelColorText;
       const { labelType, currencyFormat } = formData;
       if (optionsWithLabelColor.series) {
         const series = optionsWithLabelColor.series.map((series: any) => {
           if (series.label) {
             const formatDataRecursively = (items: any[]): any[] =>
               items.map((item: any) => {
+                if (formData?.labelBackgroundColor) {
+                  echartOptions.backgroundColor = 'black';
+                }
                 const formattedItem = { ...item };
                 if (labelType === 'key_value') {
                   formattedItem.name = currencyFormat
@@ -205,8 +216,9 @@ function Echart(
               ...series,
               label: {
                 ...series.label,
-                color:
-                  a === 1 ? `rgb(${r},${g},${b})` : `rgba(${r},${g},${b},${a})`,
+                fontSize: formData?.labelTextSize,
+                color: getColor(formData.labelColorText),
+                backgroundColor: getColor(formData.labelColorBackground),
               },
             };
           }
