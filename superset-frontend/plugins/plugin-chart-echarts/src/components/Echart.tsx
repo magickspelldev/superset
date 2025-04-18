@@ -104,9 +104,17 @@ function Echart(
     zrEventHandlers,
     selectedValues = {},
     refs,
+    formData,
   }: EchartsProps,
   ref: Ref<EchartsHandler>,
 ) {
+  console.log('[Echart][formData]');
+  console.log(formData);
+  // console.log(formData?.switchTableSpoiler);
+  // console.log(formData?.labelColorBackground);
+  // console.log(formData?.labelColorText);
+  // console.log(formData?.labelTextSize);
+
   const divRef = useRef<HTMLDivElement>(null);
   if (refs) {
     // eslint-disable-next-line no-param-reassign

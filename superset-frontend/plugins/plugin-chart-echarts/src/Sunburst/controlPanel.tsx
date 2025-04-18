@@ -17,6 +17,7 @@
  * under the License.
  */
 import { t } from '@superset-ui/core';
+// import { formatSelectOptionsForRange } from '@superset-ui/chart-controls';
 import {
   ControlPanelConfig,
   ControlPanelsContainerProps,
@@ -26,6 +27,7 @@ import {
   D3_FORMAT_OPTIONS,
   D3_TIME_FORMAT_OPTIONS,
   getStandardizedControls,
+  formatSelectOptionsForRange,
 } from '@superset-ui/chart-controls';
 import { DEFAULT_FORM_DATA } from './types';
 
@@ -134,6 +136,62 @@ const config: ControlPanelConfig = {
               choices: D3_TIME_FORMAT_OPTIONS,
               default: 'smart_date',
               description: D3_FORMAT_DOCS,
+            },
+          },
+        ],
+      ],
+    },
+    {
+      label: t('Кастомные настройки ББР'),
+      expanded: true,
+      tabOverride: 'data',
+      controlSetRows: [
+        [
+          {
+            name: 'hidden_control',
+            config: {
+              type: 'HiddenControl',
+            },
+          },
+          {
+            name: 'switch_table_spoiler',
+            config: {
+              type: 'CheckboxControl',
+              label: t('Свернуть таблицы'),
+              renderTrigger: true,
+              default: true,
+              description: t('Чекбокс позволяет сворачивать табличные части'),
+            },
+          },
+          {
+            name: 'label_color_background',
+            config: {
+              type: 'ColorPickerControl', // ConditionalFormattingControl
+              label: t('Цвет фона лейблов'),
+              renderTrigger: true,
+              default: '',
+              description: t('Позволяет настроить цвета фона для лейблов'),
+            },
+          },
+          {
+            name: 'label_color_text',
+            config: {
+              type: 'ColorPickerControl', // AnnotationLayerControl // normalize_across
+              label: t('Цвет текста лейблов'),
+              renderTrigger: true,
+              default: '',
+              description: t('Позволяет настроить цвета текста для лейблов'),
+            },
+          },
+          {
+            name: 'label_text_size',
+            config: {
+              type: 'SelectControl', // SliderControl
+              label: t('Font size'),
+              description: t('Позволяет настроить размер текста для лейблов'),
+              renderTrigger: true,
+              choices: formatSelectOptionsForRange(6, 64),
+              default: 12,
             },
           },
         ],

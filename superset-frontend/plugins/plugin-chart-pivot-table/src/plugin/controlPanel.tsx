@@ -437,6 +437,12 @@ const config: ControlPanelConfig = {
       controlSetRows: [
         [
           {
+            name: 'hidden_control',
+            config: {
+              type: 'HiddenControl',
+            },
+          },
+          {
             name: 'switch_table_spoiler',
             config: {
               type: 'CheckboxControl',

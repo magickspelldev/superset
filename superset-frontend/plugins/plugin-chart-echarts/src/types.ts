@@ -31,6 +31,7 @@ import {
   ChartPlugin,
   SqlaFormData,
   ChartMetadata,
+  QueryFormData,
 } from '@superset-ui/core';
 import type { EChartsCoreOption, EChartsType } from 'echarts/core';
 import type { TooltipMarker } from 'echarts/types/src/util/format';
@@ -55,6 +56,7 @@ export interface EchartsProps {
   selectedValues?: Record<number, string>;
   forceClear?: boolean;
   refs: Refs;
+  formData?: QueryFormData;
 }
 
 export interface EchartsHandler {
