@@ -27,6 +27,7 @@ import {
   Ref,
 } from 'react';
 
+import { format } from 'd3-format';
 import { styled, CurrencyFormatter } from '@superset-ui/core';
 import { use, init, EChartsType } from 'echarts/core';
 import {
@@ -147,6 +148,11 @@ function Echart(
       chartRef.current?.getZr().on(name, handler);
     });
 
+    const currencySymbols: Record<string, string> = {
+      RUB: '₽',
+      USD: '$',
+      EUR: '€',
+    };
     let formatted = false;
     if (formData?.labelColorText && chartRef.current) {
       formatted = true;
@@ -156,24 +162,32 @@ function Echart(
         (echartOptions as any).series?.[0]?.data,
       );
       const { r, g, b, a } = formData.labelColorText;
+      const { labelType, currencyFormat } = formData;
       if (optionsWithLabelColor.series) {
         const series = optionsWithLabelColor.series.map((series: any) => {
           if (series.label) {
-            const { labelType, currencyFormat } = formData;
             const formatDataRecursively = (items: any[]): any[] =>
               items.map((item: any) => {
                 const formattedItem = { ...item };
                 if (labelType === 'key_value') {
                   formattedItem.name = currencyFormat
                     ? currencyFormat.symbolPosition === 'prefix'
-                      ? `${item.name}: ${currencyFormat.symbol} ${item.value}`
-                      : `${item.name}: ${item.value} ${currencyFormat.symbol}`
+                      ? `${item.name}: ${
+                          currencySymbols[currencyFormat.symbol]
+                        } ${item.value}`
+                      : `${item.name}: ${item.value} ${
+                          currencySymbols[currencyFormat.symbol]
+                        }`
                     : `${item.name}: ${item.value}`;
                 } else if (labelType === 'value') {
                   formattedItem.name = currencyFormat
                     ? currencyFormat.symbolPosition === 'prefix'
-                      ? `${currencyFormat.symbol} ${item.value}`
-                      : `${item.value} ${currencyFormat.symbol}`
+                      ? `${currencySymbols[currencyFormat.symbol]} ${
+                          item.value
+                        }`
+                      : `${item.value} ${
+                          currencySymbols[currencyFormat.symbol]
+                        }`
                     : item.value;
                 } else if (labelType === 'key') {
                   formattedItem.name = item.name;
