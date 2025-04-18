@@ -27,7 +27,7 @@ import {
   Ref,
 } from 'react';
 
-import { styled } from '@superset-ui/core';
+import { styled, CurrencyFormatter } from '@superset-ui/core';
 import { use, init, EChartsType } from 'echarts/core';
 import {
   SankeyChart,
@@ -147,8 +147,65 @@ function Echart(
       chartRef.current?.getZr().on(name, handler);
     });
 
-    chartRef.current.setOption(echartOptions, true);
-  }, [echartOptions, eventHandlers, zrEventHandlers]);
+    let formatted = false;
+    if (formData?.labelColorText && chartRef.current) {
+      formatted = true;
+      const optionsWithLabelColor = JSON.parse(JSON.stringify(echartOptions));
+      console.log(
+        '[Original series data]',
+        (echartOptions as any).series?.[0]?.data,
+      );
+      const { r, g, b, a } = formData.labelColorText;
+      if (optionsWithLabelColor.series) {
+        const series = optionsWithLabelColor.series.map((series: any) => {
+          if (series.label) {
+            const { labelType, currencyFormat } = formData;
+            const formatDataRecursively = (items: any[]): any[] =>
+              items.map((item: any) => {
+                const formattedItem = { ...item };
+                if (labelType === 'key_value') {
+                  formattedItem.name = currencyFormat
+                    ? currencyFormat.symbolPosition === 'prefix'
+                      ? `${item.name}: ${currencyFormat.symbol} ${item.value}`
+                      : `${item.name}: ${item.value} ${currencyFormat.symbol}`
+                    : `${item.name}: ${item.value}`;
+                } else if (labelType === 'value') {
+                  formattedItem.name = currencyFormat
+                    ? currencyFormat.symbolPosition === 'prefix'
+                      ? `${currencyFormat.symbol} ${item.value}`
+                      : `${item.value} ${currencyFormat.symbol}`
+                    : item.value;
+                } else if (labelType === 'key') {
+                  formattedItem.name = item.name;
+                }
+                if (item.children && Array.isArray(item.children)) {
+                  formattedItem.children = formatDataRecursively(item.children);
+                }
+                return formattedItem;
+              });
+
+            if (series.data) {
+              series.data = formatDataRecursively(series.data);
+            }
+            return {
+              ...series,
+              label: {
+                ...series.label,
+                color:
+                  a === 1 ? `rgb(${r},${g},${b})` : `rgba(${r},${g},${b},${a})`,
+              },
+            };
+          }
+          return series;
+        });
+        optionsWithLabelColor.series = series;
+      }
+      chartRef.current.setOption(optionsWithLabelColor, true);
+    }
+    if (!formatted) {
+      chartRef.current.setOption(echartOptions, true);
+    }
+  }, [echartOptions, eventHandlers, zrEventHandlers, formData]);
 
   // highlighting
   useEffect(() => {

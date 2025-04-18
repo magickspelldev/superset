@@ -163,6 +163,8 @@ const config: ControlPanelConfig = {
               description: t('Чекбокс позволяет сворачивать табличные части'),
             },
           },
+        ],
+        [
           {
             name: 'label_color_background',
             config: {
@@ -173,6 +175,8 @@ const config: ControlPanelConfig = {
               description: t('Позволяет настроить цвета фона для лейблов'),
             },
           },
+        ],
+        [
           {
             name: 'label_color_text',
             config: {
@@ -183,6 +187,8 @@ const config: ControlPanelConfig = {
               description: t('Позволяет настроить цвета текста для лейблов'),
             },
           },
+        ],
+        [
           {
             name: 'label_text_size',
             config: {
