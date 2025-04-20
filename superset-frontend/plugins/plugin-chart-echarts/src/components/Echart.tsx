@@ -216,6 +216,7 @@ function Echart(
                 fontSize: formData?.labelTextSize,
                 color: getColor(formData.labelColorText),
                 backgroundColor: getColor(formData.labelColorBackground),
+                borderRadius: 8,
               },
             };
           }

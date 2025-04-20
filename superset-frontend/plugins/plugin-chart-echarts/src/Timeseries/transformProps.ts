@@ -487,6 +487,9 @@ export default function transformProps(
       hideOverlap: true,
       formatter: xAxisFormatter,
       rotate: xAxisLabelRotation,
+      // interval: 0,
+      // showMaxLabel: true,
+      // showMinLabel: true,
     },
     minorTick: { show: minorTicks },
     minInterval:
@@ -495,6 +498,7 @@ export default function transformProps(
             timeGrainSqla as keyof typeof TIMEGRAIN_TO_TIMESTAMP
           ]
         : 0,
+    splitNumber: data.length,
     ...getMinAndMaxFromBounds(
       xAxisType,
       truncateXAxis,
