@@ -27,9 +27,8 @@ import {
   Ref,
 } from 'react';
 
-import { format } from 'd3-format';
-import { styled, CurrencyFormatter } from '@superset-ui/core';
-import { use, init, EChartsType, color } from 'echarts/core';
+import { styled } from '@superset-ui/core';
+import { use, init, EChartsType } from 'echarts/core';
 import {
   SankeyChart,
   PieChart,
@@ -176,9 +175,6 @@ function Echart(
           if (series.label) {
             const formatDataRecursively = (items: any[]): any[] =>
               items.map((item: any) => {
-                if (formData?.labelBackgroundColor) {
-                  echartOptions.backgroundColor = 'black';
-                }
                 const formattedItem = { ...item };
                 if (labelType === 'key_value') {
                   formattedItem.name = currencyFormat
@@ -210,6 +206,7 @@ function Echart(
               });
 
             if (series.data) {
+              // eslint-disable-next-line no-param-reassign
               series.data = formatDataRecursively(series.data);
             }
             return {
