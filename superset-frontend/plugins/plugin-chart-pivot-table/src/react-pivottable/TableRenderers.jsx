@@ -154,9 +154,15 @@ export class TableRenderer extends Component {
     const hideColumns = formData?.hideColumns || [];
     const hideRows = formData?.hideRows || [];
     
-    // Filter out hidden columns from colAttrs and rowAttrs
-    const colAttrs = props.cols.filter(col => !hideColumns.includes(col));
-    const rowAttrs = props.rows.filter(row => !hideRows.includes(row)); // todo не удаляет строку а смещает ее
+    // Create a new props object without hidden columns and rows
+    const filteredProps = {
+      ...props,
+      cols: props.cols.filter(col => !hideColumns.includes(col)),
+      rows: props.rows.filter(row => !hideRows.includes(row)),
+    };
+    
+    const colAttrs = filteredProps.cols;
+    const rowAttrs = filteredProps.rows;
     
     const tableOptions = {
       rowTotals: true,
@@ -187,7 +193,8 @@ export class TableRenderer extends Component {
       ...subtotalOptions.rowSubtotalDisplay,
     };
 
-    const pivotData = new PivotData(props, {
+    // Use filteredProps to create pivotData
+    const pivotData = new PivotData(filteredProps, {
       rowEnabled: rowSubtotalDisplay.enabled,
       colEnabled: colSubtotalDisplay.enabled,
       rowPartialOnTop: rowSubtotalDisplay.displayOnTop,
@@ -220,7 +227,7 @@ export class TableRenderer extends Component {
       // Add in totals as well.
       if (rowTotals) {
         rowKeys.forEach(rowKey => {
-          rowTotalCallbacks[flatKey(rowKey)] = this.clickHandler(
+          rowTotalCallbacks[flatRowKey(rowKey)] = this.clickHandler(
             pivotData,
             rowKey,
             [],
@@ -922,8 +929,6 @@ export class TableRenderer extends Component {
   visibleKeys(keys, collapsed, numAttrs, subtotalDisplay) {
     // если нет стейта свернутых - то все свернуто по дефолту
     const effectiveCollapsed = collapsed || {};
-    const { formData } = this.props;
-    const hideColumns = formData?.hideColumns || [];
 
     return keys.filter(
       key =>
@@ -932,9 +937,7 @@ export class TableRenderer extends Component {
         (key.length === numAttrs ||
           flatKey(key) in effectiveCollapsed ||
           // todo прятать ли сабтоталы
-          !subtotalDisplay.hideOnExpand) &&
-        // Filter out hidden columns
-        !hideColumns.some(hiddenCol => key.includes(hiddenCol)),
+          !subtotalDisplay.hideOnExpand),
     );
   }
 
