@@ -17,14 +17,24 @@
  * under the License.
  */
 import { t } from '@superset-ui/core';
-import { ControlPanelSectionConfig } from '@superset-ui/chart-controls';
+import {
+  ControlPanelSectionConfig,
+  formatSelectOptionsForRange,
+} from '@superset-ui/chart-controls';
 
 export const customeBbrControlConfig: ControlPanelSectionConfig = {
   label: t('Кастомные настройки ББР'),
   expanded: true,
-  tabOverride: 'data',
+  // tabOverride: 'data', // вкладка DATA
+  // tabOverride: 'customize', // вкладка CUSTOMIZE
   controlSetRows: [
     [
+      {
+        name: 'hidden_control',
+        config: {
+          type: 'HiddenControl',
+        },
+      },
       {
         name: 'switch_table_spoiler',
         config: {
@@ -33,6 +43,43 @@ export const customeBbrControlConfig: ControlPanelSectionConfig = {
           renderTrigger: true,
           default: true,
           description: t('Чекбокс позволяет сворачивать табличные части'),
+        },
+      },
+    ],
+    [
+      {
+        name: 'label_color_background',
+        config: {
+          type: 'ColorPickerControl', // ConditionalFormattingControl
+          label: t('Цвет фона лейблов'),
+          renderTrigger: true,
+          default: '',
+          description: t('Позволяет настроить цвета фона для лейблов'),
+        },
+      },
+    ],
+    [
+      {
+        name: 'label_color_text',
+        config: {
+          type: 'ColorPickerControl', // AnnotationLayerControl // normalize_across
+          label: t('Цвет текста лейблов'),
+          renderTrigger: true,
+          default: '',
+          description: t('Позволяет настроить цвета текста для лейблов'),
+        },
+      },
+    ],
+    [
+      {
+        name: 'label_text_size',
+        config: {
+          type: 'SelectControl', // SliderControl
+          label: t('Font size'),
+          description: t('Позволяет настроить размер текста для лейблов'),
+          renderTrigger: true,
+          choices: formatSelectOptionsForRange(6, 64),
+          default: 12,
         },
       },
     ],

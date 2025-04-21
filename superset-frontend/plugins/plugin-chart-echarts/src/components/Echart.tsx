@@ -60,6 +60,7 @@ import {
 } from 'echarts/components';
 import { LabelLayout } from 'echarts/features';
 import { EchartsHandler, EchartsProps, EchartsStylesProps } from '../types';
+import { getColor, transformLabelValues } from './echarts.helper';
 
 const Styles = styled.div<EchartsStylesProps>`
   height: ${({ height }) => height};
@@ -147,20 +148,6 @@ function Echart(
       chartRef.current?.getZr().on(name, handler);
     });
 
-    const getColor = (color: {
-      r: number;
-      g: number;
-      b: number;
-      a: number;
-    }): string => {
-      const { r, g, b, a } = color;
-      return a === 1 ? `rgb(${r},${g},${b})` : `rgba(${r},${g},${b},${a})`;
-    };
-    const currencySymbols: Record<string, string> = {
-      RUB: '₽',
-      USD: '$',
-      EUR: '€',
-    };
     let formatted = false;
     if (formData?.labelColorText && chartRef.current) {
       formatted = true;
@@ -173,41 +160,14 @@ function Echart(
       if (optionsWithLabelColor.series) {
         const series = optionsWithLabelColor.series.map((series: any) => {
           if (series.label) {
-            const formatDataRecursively = (items: any[]): any[] =>
-              items.map((item: any) => {
-                const formattedItem = { ...item };
-                if (labelType === 'key_value') {
-                  formattedItem.name = currencyFormat
-                    ? currencyFormat.symbolPosition === 'prefix'
-                      ? `${item.name}: ${
-                          currencySymbols[currencyFormat.symbol]
-                        } ${item.value}`
-                      : `${item.name}: ${item.value} ${
-                          currencySymbols[currencyFormat.symbol]
-                        }`
-                    : `${item.name}: ${item.value}`;
-                } else if (labelType === 'value') {
-                  formattedItem.name = currencyFormat
-                    ? currencyFormat.symbolPosition === 'prefix'
-                      ? `${currencySymbols[currencyFormat.symbol]} ${
-                          item.value
-                        }`
-                      : `${item.value} ${
-                          currencySymbols[currencyFormat.symbol]
-                        }`
-                    : item.value;
-                } else if (labelType === 'key') {
-                  formattedItem.name = item.name;
-                }
-                if (item.children && Array.isArray(item.children)) {
-                  formattedItem.children = formatDataRecursively(item.children);
-                }
-                return formattedItem;
-              });
-
             if (series.data) {
               // eslint-disable-next-line no-param-reassign
-              series.data = formatDataRecursively(series.data);
+              series.data = transformLabelValues(
+                series.data,
+                labelType,
+                currencyFormat,
+                formData?.labelTemplate ?? '',
+              );
             }
             return {
               ...series,
@@ -216,7 +176,7 @@ function Echart(
                 fontSize: formData?.labelTextSize,
                 color: getColor(formData.labelColorText),
                 backgroundColor: getColor(formData.labelColorBackground),
-                borderRadius: 8,
+                borderRadius: 6,
               },
             };
           }

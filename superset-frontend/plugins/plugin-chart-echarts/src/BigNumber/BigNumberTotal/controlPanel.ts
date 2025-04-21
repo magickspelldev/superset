@@ -24,6 +24,7 @@ import {
   Dataset,
   getStandardizedControls,
 } from '@superset-ui/chart-controls';
+import customeBbrControlConfig from 'packages/superset-ui-chart-controls/src/sections/customeBbrControls';
 import { headerFontSize, subheaderFontSize } from '../sharedControls';
 
 export default {
@@ -53,25 +54,26 @@ export default {
         ],
       ],
     },
-    {
-      label: t('Кастомные настройки ББР'),
-      expanded: true,
-      tabOverride: 'data',
-      controlSetRows: [
-        [
-          {
-            name: 'switch_table_spoiler',
-            config: {
-              type: 'CheckboxControl',
-              label: t('Свернуть таблицы'),
-              renderTrigger: true,
-              default: true,
-              description: t('Чекбокс позволяет сворачивать табличные части'),
-            },
-          },
-        ],
-      ],
-    },
+    // {
+    //   label: t('Кастомные настройки ББР'),
+    //   expanded: true,
+    //   tabOverride: 'data',
+    //   controlSetRows: [
+    //     [
+    //       {
+    //         name: 'switch_table_spoiler',
+    //         config: {
+    //           type: 'CheckboxControl',
+    //           label: t('Свернуть таблицы'),
+    //           renderTrigger: true,
+    //           default: true,
+    //           description: t('Чекбокс позволяет сворачивать табличные части'),
+    //         },
+    //       },
+    //     ],
+    //   ],
+    // },
+    customeBbrControlConfig,
     {
       label: t('Chart Options'),
       expanded: true,

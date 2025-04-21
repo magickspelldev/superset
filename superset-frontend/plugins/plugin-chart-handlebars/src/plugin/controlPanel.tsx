@@ -21,6 +21,7 @@ import {
   getStandardizedControls,
 } from '@superset-ui/chart-controls';
 import { t } from '@superset-ui/core';
+import customeBbrControlConfig from 'packages/superset-ui-chart-controls/src/sections/customeBbrControls';
 import { allColumnsControlSetItem } from './controls/columns';
 import { groupByControlSetItem } from './controls/groupBy';
 import { handlebarsTemplateControlSetItem } from './controls/handlebarTemplate';
@@ -72,25 +73,26 @@ const config: ControlPanelConfig = {
         [styleControlSetItem],
       ],
     },
-    {
-      label: t('Кастомные настройки ББР'),
-      expanded: true,
-      tabOverride: 'data',
-      controlSetRows: [
-        [
-          {
-            name: 'switch_table_spoiler',
-            config: {
-              type: 'CheckboxControl',
-              label: t('Свернуть таблицы'),
-              renderTrigger: true,
-              default: true,
-              description: t('Чекбокс позволяет сворачивать табличные части'),
-            },
-          },
-        ],
-      ],
-    },
+    customeBbrControlConfig,
+    // {
+    //   label: t('Кастомные настройки ББР'),
+    //   expanded: true,
+    //   tabOverride: 'data',
+    //   controlSetRows: [
+    //     [
+    //       {
+    //         name: 'switch_table_spoiler',
+    //         config: {
+    //           type: 'CheckboxControl',
+    //           label: t('Свернуть таблицы'),
+    //           renderTrigger: true,
+    //           default: true,
+    //           description: t('Чекбокс позволяет сворачивать табличные части'),
+    //         },
+    //       },
+    //     ],
+    //   ],
+    // },
   ],
   formDataOverrides: formData => ({
     ...formData,

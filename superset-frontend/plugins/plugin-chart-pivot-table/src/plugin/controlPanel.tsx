@@ -32,6 +32,7 @@ import {
   Dataset,
   getStandardizedControls,
 } from '@superset-ui/chart-controls';
+import customeBbrControlConfig from 'packages/superset-ui-chart-controls/src/sections/customeBbrControls';
 import { MetricsLayoutEnum } from '../types';
 
 const config: ControlPanelConfig = {
@@ -430,31 +431,32 @@ const config: ControlPanelConfig = {
         ],
       ],
     },
-    {
-      label: t('Кастомные настройки ББР'),
-      expanded: true,
-      tabOverride: 'data',
-      controlSetRows: [
-        [
-          {
-            name: 'hidden_control',
-            config: {
-              type: 'HiddenControl',
-            },
-          },
-          {
-            name: 'switch_table_spoiler',
-            config: {
-              type: 'CheckboxControl',
-              label: t('Свернуть таблицы'),
-              renderTrigger: true,
-              default: true,
-              description: t('Чекбокс позволяет сворачивать табличные части'),
-            },
-          },
-        ],
-      ],
-    },
+    customeBbrControlConfig,
+    // {
+    //   label: t('Кастомные настройки ББР'),
+    //   expanded: true,
+    //   tabOverride: 'data',
+    //   controlSetRows: [
+    //     [
+    //       {
+    //         name: 'hidden_control',
+    //         config: {
+    //           type: 'HiddenControl',
+    //         },
+    //       },
+    //       {
+    //         name: 'switch_table_spoiler',
+    //         config: {
+    //           type: 'CheckboxControl',
+    //           label: t('Свернуть таблицы'),
+    //           renderTrigger: true,
+    //           default: true,
+    //           description: t('Чекбокс позволяет сворачивать табличные части'),
+    //         },
+    //       },
+    //     ],
+    //   ],
+    // },
   ],
   formDataOverrides: formData => {
     const groupbyColumns = getStandardizedControls().controls.columns.filter(
