@@ -79,6 +79,7 @@ export class TableRenderer extends Component {
   componentDidMount() {
     console.log('[componentDidMount]');
     const { formData } = this.props;
+    console.log(formData);
     if (formData?.switchTableSpoiler) {
       this.collapseAll();
     }
@@ -149,8 +150,14 @@ export class TableRenderer extends Component {
   getBasePivotSettings() {
     // One-time extraction of pivot settings that we'll use throughout the render.
     const { props } = this;
-    const colAttrs = props.cols;
-    const rowAttrs = props.rows;
+    const { formData } = props;
+    const hideColumns = formData?.hideColumns || [];
+    const hideRows = formData?.hideRows || [];
+    
+    // Filter out hidden columns from colAttrs and rowAttrs
+    const colAttrs = props.cols.filter(col => !hideColumns.includes(col));
+    const rowAttrs = props.rows.filter(row => !hideRows.includes(row)); // todo не удаляет строку а смещает ее
+    
     const tableOptions = {
       rowTotals: true,
       colTotals: true,
@@ -915,6 +922,9 @@ export class TableRenderer extends Component {
   visibleKeys(keys, collapsed, numAttrs, subtotalDisplay) {
     // если нет стейта свернутых - то все свернуто по дефолту
     const effectiveCollapsed = collapsed || {};
+    const { formData } = this.props;
+    const hideColumns = formData?.hideColumns || [];
+
     return keys.filter(
       key =>
         !key.some((k, j) => effectiveCollapsed[flatKey(key.slice(0, j))]) &&
@@ -922,7 +932,9 @@ export class TableRenderer extends Component {
         (key.length === numAttrs ||
           flatKey(key) in effectiveCollapsed ||
           // todo прятать ли сабтоталы
-          !subtotalDisplay.hideOnExpand),
+          !subtotalDisplay.hideOnExpand) &&
+        // Filter out hidden columns
+        !hideColumns.some(hiddenCol => key.includes(hiddenCol)),
     );
   }
 

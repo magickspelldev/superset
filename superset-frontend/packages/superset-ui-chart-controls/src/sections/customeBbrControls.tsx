@@ -20,6 +20,7 @@ import { t } from '@superset-ui/core';
 import {
   ControlPanelSectionConfig,
   formatSelectOptionsForRange,
+  sharedControls,
 } from '@superset-ui/chart-controls';
 
 export const customeBbrControlConfig: ControlPanelSectionConfig = {
@@ -43,6 +44,26 @@ export const customeBbrControlConfig: ControlPanelSectionConfig = {
           renderTrigger: true,
           default: true,
           description: t('Чекбокс позволяет сворачивать табличные части'),
+        },
+      },
+    ],
+    [
+      {
+        name: 'hideColumns',
+        config: {
+          ...sharedControls.groupby,
+          label: t('Скрыть колонки'),
+          description: t('Columns to hide'),
+        },
+      },
+    ],
+    [
+      {
+        name: 'hideRows',
+        config: {
+          ...sharedControls.groupby,
+          label: t('Скрыть строчки'),
+          description: t('Rows to hide'),
         },
       },
     ],
