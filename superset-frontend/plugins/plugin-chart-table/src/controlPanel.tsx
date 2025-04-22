@@ -47,6 +47,10 @@ import {
 } from '@superset-ui/chart-controls';
 
 import { isEmpty } from 'lodash';
+import {
+  getCustomeControlConfig,
+  VizTypeCfg,
+} from 'packages/superset-ui-chart-controls/src/sections';
 import { PAGE_SIZE_OPTIONS } from './consts';
 import { ColorSchemeEnum } from './types';
 
@@ -639,9 +643,10 @@ const config: ControlPanelConfig = {
       }),
       visibility: isAggMode,
     },
-    {
-      ...sections.customeControlConfig,
-    },
+    // {
+    //   ...sections.customeControlConfig,
+    // },
+    getCustomeControlConfig(VizTypeCfg.Table),
   ],
   formDataOverrides: formData => ({
     ...formData,

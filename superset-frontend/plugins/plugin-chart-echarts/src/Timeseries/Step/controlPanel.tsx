@@ -27,6 +27,10 @@ import {
   sharedControls,
 } from '@superset-ui/chart-controls';
 
+import {
+  getCustomeControlConfig,
+  VizTypeCfg,
+} from 'packages/superset-ui-chart-controls/src/sections/customeControls';
 import { EchartsTimeseriesSeriesType } from '../../types';
 import { DEFAULT_FORM_DATA, TIME_SERIES_DESCRIPTION_TEXT } from '../constants';
 import {
@@ -58,8 +62,9 @@ const config: ControlPanelConfig = {
     sections.advancedAnalyticsControls,
     sections.annotationsAndLayersControls,
     sections.forecastIntervalControls,
-    sections.customeControlConfig,
     sections.titleControls,
+    // sections.customeControlConfig,
+    getCustomeControlConfig(VizTypeCfg.Step),
     {
       label: t('Chart Options'),
       expanded: true,

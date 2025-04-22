@@ -264,6 +264,7 @@ export default function TableChart<D extends DataRecord = DataRecord>(
     isUsingTimeComparison,
     basicColorFormatters,
     basicColorColumnFormatters,
+    formData,
   } = props;
   const comparisonColumns = [
     { key: 'all', label: t('Display all') },
@@ -317,7 +318,8 @@ export default function TableChart<D extends DataRecord = DataRecord>(
     },
     [filters],
   );
-
+  console.log('[TableChart]');
+  console.log(formData);
   const getCrossFilterDataMask = (key: string, value: DataRecordValue) => {
     let updatedFilters = { ...(filters || {}) };
     if (filters && isActiveFilterValue(key, value)) {
@@ -407,14 +409,25 @@ export default function TableChart<D extends DataRecord = DataRecord>(
   const comparisonLabels = [t('Main'), '#', '△', '%'];
   const filteredColumnsMeta = useMemo(() => {
     if (!isUsingTimeComparison) {
-      return columnsMeta;
+      return columnsMeta.filter(
+        col =>
+          ![
+            ...formData.hideColumns,
+            ...formData.hideMetrics.map((hm: { label: string }) => hm.label),
+          ].includes(col.label),
+      );
     }
     const allColumns = comparisonColumns[0].key;
     const main = comparisonLabels[0];
     const showAllColumns = selectedComparisonColumns.includes(allColumns);
 
     return columnsMeta.filter(({ label, key }) => {
-      // Extract the key portion after the space, assuming the format is always "label key"
+      // Filter out hidden columns first
+      if (formData.hideColumns.includes(label)) {
+        return false;
+      }
+
+      // Existing time comparison filtering logic
       const keyPortion = key.substring(label.length);
       const isKeyHidded = hideComparisonKeys.includes(keyPortion);
       const isLableMain = label === main;
@@ -434,6 +447,7 @@ export default function TableChart<D extends DataRecord = DataRecord>(
     isUsingTimeComparison,
     hideComparisonKeys,
     selectedComparisonColumns,
+    formData.hideColumns,
   ]);
 
   const handleContextMenu =
@@ -675,6 +689,11 @@ export default function TableChart<D extends DataRecord = DataRecord>(
 
   const getColumnConfigs = useCallback(
     (column: DataColumnMeta, i: number): ColumnWithLooseAccessor<D> => {
+      console.log(`label = ${column.label}`);
+      console.log(`key = ${column.key}`);
+      if (formData.hideColumns.includes(column.label)) {
+        console.log('[BINGO]');
+      }
       const {
         key,
         label,
@@ -870,6 +889,9 @@ export default function TableChart<D extends DataRecord = DataRecord>(
               isActiveFilterValue(key, value) ? ' dt-is-active-filter' : '',
             ].join(' '),
             tabIndex: 0,
+            // width: 0,
+            // // width: formData.hideColumns.includes(column.label) ? 0 : 'auto',
+            // display: 'none',
           };
           if (html) {
             if (truncateLongCells) {

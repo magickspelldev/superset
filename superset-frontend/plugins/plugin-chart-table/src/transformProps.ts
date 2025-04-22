@@ -643,6 +643,7 @@ const transformProps = (
     basicColorFormatters,
     startDateOffset,
     basicColorColumnFormatters,
+    formData,
   };
 };
 

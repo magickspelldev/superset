@@ -25,7 +25,10 @@ import {
   getStandardizedControls,
   temporalColumnMixin,
 } from '@superset-ui/chart-controls';
-import customeControlConfig from 'packages/superset-ui-chart-controls/src/sections/customeControls';
+import {
+  getCustomeControlConfig,
+  VizTypeCfg,
+} from 'packages/superset-ui-chart-controls/src/sections/customeControls';
 import { headerFontSize, subheaderFontSize } from '../sharedControls';
 
 const config: ControlPanelConfig = {
@@ -126,26 +129,7 @@ const config: ControlPanelConfig = {
         ],
       ],
     },
-    // {
-    //   label: t('Кастомные настройки ББР'),
-    //   expanded: true,
-    //   tabOverride: 'data',
-    //   controlSetRows: [
-    //     [
-    //       {
-    //         name: 'switch_table_spoiler',
-    //         config: {
-    //           type: 'CheckboxControl',
-    //           label: t('Свернуть таблицы'),
-    //           renderTrigger: true,
-    //           default: true,
-    //           description: t('Чекбокс позволяет сворачивать табличные части'),
-    //         },
-    //       },
-    //     ],
-    //   ],
-    // },
-    customeControlConfig,
+    getCustomeControlConfig(VizTypeCfg.BigNumberWhithTrendline),
     {
       label: t('Chart Options'),
       expanded: true,

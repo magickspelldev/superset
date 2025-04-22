@@ -28,6 +28,10 @@ import {
 } from '@superset-ui/chart-controls';
 
 import {
+  getCustomeControlConfig,
+  VizTypeCfg,
+} from 'packages/superset-ui-chart-controls/src/sections/customeControls';
+import {
   DEFAULT_FORM_DATA,
   TIME_SERIES_DESCRIPTION_TEXT,
 } from '../../constants';
@@ -58,7 +62,8 @@ const config: ControlPanelConfig = {
     sections.advancedAnalyticsControls,
     sections.annotationsAndLayersControls,
     sections.forecastIntervalControls,
-    sections.customeControlConfig,
+    // sections.customeControlConfig,
+    getCustomeControlConfig(VizTypeCfg.Smoothline),
     sections.titleControls,
     {
       label: t('Chart Options'),

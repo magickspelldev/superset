@@ -30,6 +30,10 @@ import {
   sharedControls,
 } from '@superset-ui/chart-controls';
 import {
+  getCustomeControlConfig,
+  VizTypeCfg,
+} from 'packages/superset-ui-chart-controls/src/sections/customeControls';
+import {
   legendSection,
   minorTicks,
   richTooltipSection,
@@ -282,7 +286,8 @@ const config: ControlPanelConfig = {
     sections.advancedAnalyticsControls,
     sections.annotationsAndLayersControls,
     sections.forecastIntervalControls,
-    sections.customeControlConfig,
+    // sections.customeControlConfig,
+    getCustomeControlConfig(VizTypeCfg.RegularBar),
     {
       label: t('Chart Orientation'),
       expanded: true,

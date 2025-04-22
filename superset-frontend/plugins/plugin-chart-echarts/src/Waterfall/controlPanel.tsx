@@ -25,7 +25,10 @@ import {
   formatSelectOptions,
   sharedControls,
 } from '@superset-ui/chart-controls';
-import customeControlConfig from 'packages/superset-ui-chart-controls/src/sections/customeControls';
+import {
+  getCustomeControlConfig,
+  VizTypeCfg,
+} from 'packages/superset-ui-chart-controls/src/sections/customeControls';
 import { showValueControl } from '../controls';
 
 const config: ControlPanelConfig = {
@@ -151,26 +154,7 @@ const config: ControlPanelConfig = {
         ['currency_format'],
       ],
     },
-    customeControlConfig,
-    // {
-    //   label: t('Кастомные настройки ББР'),
-    //   expanded: true,
-    //   tabOverride: 'data',
-    //   controlSetRows: [
-    //     [
-    //       {
-    //         name: 'switch_table_spoiler',
-    //         config: {
-    //           type: 'CheckboxControl',
-    //           label: t('Свернуть таблицы'),
-    //           renderTrigger: true,
-    //           default: true,
-    //           description: t('Чекбокс позволяет сворачивать табличные части'),
-    //         },
-    //       },
-    //     ],
-    //   ],
-    // },
+    getCustomeControlConfig(VizTypeCfg.Waterfall),
   ],
   controlOverrides: {
     groupby: {

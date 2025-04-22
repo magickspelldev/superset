@@ -17,11 +17,60 @@
  * under the License.
  */
 import { t } from '@superset-ui/core';
+import { ControlPanelSectionConfig } from '@superset-ui/chart-controls';
 import {
-  ControlPanelSectionConfig,
-  formatSelectOptionsForRange,
-  sharedControls,
-} from '@superset-ui/chart-controls';
+  echartFontSettings,
+  hideColumnssSetting,
+  hideMetricsSettings,
+  hideRowsSetting,
+  switchTableSpoilerSettings,
+} from './customeControls.helper';
+
+export enum VizTypeCfg {
+  Table = 'table',
+  PivotTable = 'pivot_table',
+  Pie = 'pie',
+  Sunburst = 'sunburst',
+  Area = 'area', // empty
+  Sankey = 'sankey', // empty
+  BigNumberTotal = 'big_number_total', // empty
+  BigNumberWhithTrendline = 'big_number_whith_trendline', // empty
+  Handlebars = 'wandlebars', // empty
+  Waterfall = 'waterfall', // empty
+  Step = 'step', // empty
+  Smoothline = 'smoothline', // empty
+  RegularBar = 'regular_bar', // empty
+  Line = 'line', // empty
+}
+
+export function getCustomeControlConfig(
+  vizType: VizTypeCfg,
+): ControlPanelSectionConfig {
+  const customeControlConfig: ControlPanelSectionConfig = {
+    label: t('Кастомные настройки'),
+    expanded: true,
+    // tabOverride: 'data', // вкладка DATA
+    // tabOverride: 'customize', // вкладка CUSTOMIZE
+    controlSetRows: [],
+  };
+
+  if (vizType === VizTypeCfg.Table || vizType === VizTypeCfg.PivotTable) {
+    customeControlConfig.controlSetRows.push(hideColumnssSetting);
+  }
+  if (vizType === VizTypeCfg.Table) {
+    customeControlConfig.controlSetRows.push(hideMetricsSettings);
+  }
+  if (vizType === VizTypeCfg.PivotTable) {
+    customeControlConfig.controlSetRows.push(switchTableSpoilerSettings);
+    customeControlConfig.controlSetRows.push(hideRowsSetting);
+  }
+
+  if (vizType === VizTypeCfg.Pie || vizType === VizTypeCfg.Sunburst) {
+    customeControlConfig.controlSetRows.push(...echartFontSettings);
+  }
+
+  return customeControlConfig;
+}
 
 export const customeControlConfig: ControlPanelSectionConfig = {
   label: t('Кастомные настройки'),
@@ -29,81 +78,11 @@ export const customeControlConfig: ControlPanelSectionConfig = {
   // tabOverride: 'data', // вкладка DATA
   // tabOverride: 'customize', // вкладка CUSTOMIZE
   controlSetRows: [
-    [
-      {
-        name: 'hidden_control',
-        config: {
-          type: 'HiddenControl',
-        },
-      },
-      {
-        name: 'switch_table_spoiler',
-        config: {
-          type: 'CheckboxControl',
-          label: t('Свернуть таблицы'),
-          renderTrigger: true,
-          default: true,
-          description: t('Чекбокс позволяет сворачивать табличные части'),
-        },
-      },
-    ],
-    [
-      {
-        name: 'hideColumns',
-        config: {
-          ...sharedControls.groupby,
-          label: t('Скрыть колонки'),
-          description: t('Columns to hide'),
-        },
-      },
-    ],
-    [
-      {
-        name: 'hideRows',
-        config: {
-          ...sharedControls.groupby,
-          label: t('Скрыть строчки'),
-          description: t('Rows to hide'),
-        },
-      },
-    ],
-    [
-      {
-        name: 'label_color_background',
-        config: {
-          type: 'ColorPickerControl', // ConditionalFormattingControl
-          label: t('Цвет фона лейблов'),
-          renderTrigger: true,
-          default: '',
-          description: t('Позволяет настроить цвета фона для лейблов'),
-        },
-      },
-    ],
-    [
-      {
-        name: 'label_color_text',
-        config: {
-          type: 'ColorPickerControl', // AnnotationLayerControl // normalize_across
-          label: t('Цвет текста лейблов'),
-          renderTrigger: true,
-          default: '',
-          description: t('Позволяет настроить цвета текста для лейблов'),
-        },
-      },
-    ],
-    [
-      {
-        name: 'label_text_size',
-        config: {
-          type: 'SelectControl', // SliderControl
-          label: t('Font size'),
-          description: t('Позволяет настроить размер текста для лейблов'),
-          renderTrigger: true,
-          choices: formatSelectOptionsForRange(6, 64),
-          default: 12,
-        },
-      },
-    ],
+    switchTableSpoilerSettings,
+    hideColumnssSetting,
+    hideRowsSetting,
+    hideMetricsSettings,
+    ...echartFontSettings,
   ],
   // controlOverrides: {
   //   y_axis_format: {
