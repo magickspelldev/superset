@@ -87,7 +87,7 @@ export const hideMetricsSettings = [
   {
     name: 'hideMetrics',
     config: {
-      ...sharedControls.metrics, // todo // sort_by_metric // secondary_metric // truncate_metric - скрыть все метрики
+      ...sharedControls.metricsEmpty,
       label: 'Скрыть метрики',
       description: 'Metrics to hide',
     },

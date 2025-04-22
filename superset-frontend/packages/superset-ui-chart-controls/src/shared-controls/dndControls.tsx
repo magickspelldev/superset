@@ -166,6 +166,26 @@ export const dndAdhocMetricsControl: SharedControlConfig<
   ),
 };
 
+export const dndAdhocMetricsControlEmpty: SharedControlConfig<
+  'DndMetricSelect' | 'MetricsControl'
+> = {
+  type: 'DndMetricSelect',
+  multi: true,
+  label: t('Metrics'),
+  validators: [],
+  mapStateToProps: ({ datasource }) => ({
+    columns: datasource?.columns || [],
+    savedMetrics: defineSavedMetrics(datasource),
+    datasource,
+    datasourceType: datasource?.type,
+  }),
+  description: t(
+    'Select one or many metrics to display. ' +
+      'You can use an aggregation function on a column ' +
+      'or write custom SQL to create a metric.',
+  ),
+};
+
 export const dndAdhocMetricControl: typeof dndAdhocMetricsControl = {
   ...dndAdhocMetricsControl,
   multi: false,

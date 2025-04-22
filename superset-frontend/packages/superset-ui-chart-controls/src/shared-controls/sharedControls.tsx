@@ -70,6 +70,7 @@ import {
   dndAdhocFilterControl,
   dndAdhocMetricControl,
   dndAdhocMetricsControl,
+  dndAdhocMetricsControlEmpty,
   dndGranularitySqlaControl,
   dndSortByControl,
   dndSecondaryMetricControl,
@@ -369,6 +370,7 @@ const sort_by_metric: SharedControlConfig<'CheckboxControl'> = {
 
 export default {
   metrics: dndAdhocMetricsControl,
+  metricsEmpty: dndAdhocMetricsControlEmpty,
   metric: dndAdhocMetricControl,
   datasource: datasourceControl,
   viz_type,
