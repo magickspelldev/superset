@@ -32,7 +32,7 @@ import {
   Dataset,
   getStandardizedControls,
 } from '@superset-ui/chart-controls';
-import customeBbrControlConfig from 'packages/superset-ui-chart-controls/src/sections/customeBbrControls';
+import customeControlConfig from 'packages/superset-ui-chart-controls/src/sections/customeControls';
 import { MetricsLayoutEnum } from '../types';
 
 const config: ControlPanelConfig = {
@@ -431,7 +431,7 @@ const config: ControlPanelConfig = {
         ],
       ],
     },
-    customeBbrControlConfig,
+    customeControlConfig,
     // {
     //   label: t('Кастомные настройки ББР'),
     //   expanded: true,

@@ -21,7 +21,7 @@ import {
   ControlPanelConfig,
   dndGroupByControl,
 } from '@superset-ui/chart-controls';
-import customeBbrControlConfig from 'packages/superset-ui-chart-controls/src/sections/customeBbrControls';
+import customeControlConfig from 'packages/superset-ui-chart-controls/src/sections/customeControls';
 
 const config: ControlPanelConfig = {
   controlPanelSections: [
@@ -89,7 +89,7 @@ const config: ControlPanelConfig = {
     //     ],
     //   ],
     // },
-    customeBbrControlConfig,
+    customeControlConfig,
   ],
 };
 

@@ -28,7 +28,7 @@ import {
   getStandardizedControls,
   sharedControls,
 } from '@superset-ui/chart-controls';
-import customeBbrControlConfig from 'packages/superset-ui-chart-controls/src/sections/customeBbrControls';
+import customeControlConfig from 'packages/superset-ui-chart-controls/src/sections/customeControls';
 import { DEFAULT_FORM_DATA } from './types';
 import { legendSection } from '../controls';
 
@@ -297,7 +297,7 @@ const config: ControlPanelConfig = {
     //     ],
     //   ],
     // },
-    customeBbrControlConfig,
+    customeControlConfig,
   ],
   controlOverrides: {
     series: {

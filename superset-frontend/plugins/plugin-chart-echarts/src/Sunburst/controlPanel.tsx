@@ -28,7 +28,7 @@ import {
   D3_TIME_FORMAT_OPTIONS,
   getStandardizedControls,
 } from '@superset-ui/chart-controls';
-import customeBbrControlConfig from 'packages/superset-ui-chart-controls/src/sections/customeBbrControls';
+import customeControlConfig from 'packages/superset-ui-chart-controls/src/sections/customeControls';
 import { DEFAULT_FORM_DATA } from './types';
 
 const { labelType, numberFormat, showLabels } = DEFAULT_FORM_DATA;
@@ -141,7 +141,7 @@ const config: ControlPanelConfig = {
         ],
       ],
     },
-    customeBbrControlConfig,
+    customeControlConfig,
     // {
     //   label: t('Кастомные настройки ББР'),
     //   expanded: true,

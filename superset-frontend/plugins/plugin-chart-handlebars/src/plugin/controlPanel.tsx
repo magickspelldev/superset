@@ -21,7 +21,7 @@ import {
   getStandardizedControls,
 } from '@superset-ui/chart-controls';
 import { t } from '@superset-ui/core';
-import customeBbrControlConfig from 'packages/superset-ui-chart-controls/src/sections/customeBbrControls';
+import customeControlConfig from 'packages/superset-ui-chart-controls/src/sections/customeControls';
 import { allColumnsControlSetItem } from './controls/columns';
 import { groupByControlSetItem } from './controls/groupBy';
 import { handlebarsTemplateControlSetItem } from './controls/handlebarTemplate';
@@ -73,7 +73,7 @@ const config: ControlPanelConfig = {
         [styleControlSetItem],
       ],
     },
-    customeBbrControlConfig,
+    customeControlConfig,
     // {
     //   label: t('Кастомные настройки ББР'),
     //   expanded: true,

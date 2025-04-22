@@ -640,7 +640,7 @@ const config: ControlPanelConfig = {
       visibility: isAggMode,
     },
     {
-      ...sections.customeBbrControlConfig,
+      ...sections.customeControlConfig,
     },
   ],
   formDataOverrides: formData => ({

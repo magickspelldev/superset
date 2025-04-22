@@ -24,7 +24,7 @@ import {
   Dataset,
   getStandardizedControls,
 } from '@superset-ui/chart-controls';
-import customeBbrControlConfig from 'packages/superset-ui-chart-controls/src/sections/customeBbrControls';
+import customeControlConfig from 'packages/superset-ui-chart-controls/src/sections/customeControls';
 import { headerFontSize, subheaderFontSize } from '../sharedControls';
 
 export default {
@@ -73,7 +73,7 @@ export default {
     //     ],
     //   ],
     // },
-    customeBbrControlConfig,
+    customeControlConfig,
     {
       label: t('Chart Options'),
       expanded: true,

@@ -25,7 +25,7 @@ import {
   formatSelectOptions,
   sharedControls,
 } from '@superset-ui/chart-controls';
-import customeBbrControlConfig from 'packages/superset-ui-chart-controls/src/sections/customeBbrControls';
+import customeControlConfig from 'packages/superset-ui-chart-controls/src/sections/customeControls';
 import { showValueControl } from '../controls';
 
 const config: ControlPanelConfig = {
@@ -151,7 +151,7 @@ const config: ControlPanelConfig = {
         ['currency_format'],
       ],
     },
-    customeBbrControlConfig,
+    customeControlConfig,
     // {
     //   label: t('Кастомные настройки ББР'),
     //   expanded: true,

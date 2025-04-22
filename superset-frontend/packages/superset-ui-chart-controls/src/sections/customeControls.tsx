@@ -23,8 +23,8 @@ import {
   sharedControls,
 } from '@superset-ui/chart-controls';
 
-export const customeBbrControlConfig: ControlPanelSectionConfig = {
-  label: t('Кастомные настройки ББР'),
+export const customeControlConfig: ControlPanelSectionConfig = {
+  label: t('Кастомные настройки'),
   expanded: true,
   // tabOverride: 'data', // вкладка DATA
   // tabOverride: 'customize', // вкладка CUSTOMIZE
@@ -120,4 +120,4 @@ export const customeBbrControlConfig: ControlPanelSectionConfig = {
   // }),
 };
 
-export default customeBbrControlConfig;
+export default customeControlConfig;
