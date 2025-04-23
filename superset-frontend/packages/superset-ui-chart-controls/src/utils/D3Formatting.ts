@@ -36,6 +36,9 @@ export const D3_NUMBER_FORMAT_DESCRIPTION_PERCENTAGE_TEXT = t(
 );
 
 const d3Formatted: [string, string][] = [
+  'ru,3s',
+  'ru,6s',
+  'ru,9s',
   ',d',
   '$,d',
   '.1s',
@@ -73,6 +76,7 @@ const d3Formatted: [string, string][] = [
 // input choices & options
 export const D3_FORMAT_OPTIONS: [string, string][] = [
   [NumberFormats.SMART_NUMBER, t('Adaptive formatting')],
+  [NumberFormats.SMART_NUMBER_RU, t('Adaptive formatting RU')],
   ['~g', t('Original value')],
   ...d3Formatted,
   ['DURATION', t('Duration in ms (66000 => 1m 6s)')],

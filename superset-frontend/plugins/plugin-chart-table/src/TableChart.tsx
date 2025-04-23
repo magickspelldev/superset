@@ -406,16 +406,20 @@ export default function TableChart<D extends DataRecord = DataRecord>(
     };
   };
 
+  const hiddenColumns: Array<string> = [];
+  if (formData?.hideColumns) {
+    hiddenColumns.push(...formData?.hideColumns);
+  }
+  if (formData?.hideMetrics) {
+    hiddenColumns.push(
+      ...formData?.hideMetrics?.map((hm: { label: string }) => hm.label),
+    );
+  }
+
   const comparisonLabels = [t('Main'), '#', '△', '%'];
   const filteredColumnsMeta = useMemo(() => {
     if (!isUsingTimeComparison) {
-      return columnsMeta.filter(
-        col =>
-          ![
-            ...formData.hideColumns,
-            ...formData.hideMetrics.map((hm: { label: string }) => hm.label),
-          ].includes(col.label),
-      );
+      return columnsMeta.filter(col => !hiddenColumns.includes(col.label));
     }
     const allColumns = comparisonColumns[0].key;
     const main = comparisonLabels[0];
