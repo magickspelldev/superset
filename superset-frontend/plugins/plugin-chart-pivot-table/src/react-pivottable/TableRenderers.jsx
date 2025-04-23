@@ -365,24 +365,30 @@ export class TableRenderer extends Component {
   toggleRowKey(flatRowKey) {
     return e => {
       e.stopPropagation();
-      this.setState(state => ({
-        collapsedRows: {
-          ...state.collapsedRows,
-          [flatRowKey]: !state.collapsedRows[flatRowKey],
-        },
-      }));
+      this.setState(state => {
+        const isCollapsed = state.collapsedRows[flatRowKey];
+        return {
+          collapsedRows: {
+            ...state.collapsedRows,
+            [flatRowKey]: !isCollapsed,
+          },
+        };
+      });
     };
   }
 
   toggleColKey(flatColKey) {
     return e => {
       e.stopPropagation();
-      this.setState(state => ({
-        collapsedCols: {
-          ...state.collapsedCols,
-          [flatColKey]: !state.collapsedCols[flatColKey],
-        },
-      }));
+      this.setState(state => {
+        const isCollapsed = state.collapsedCols[flatColKey];
+        return {
+          collapsedCols: {
+            ...state.collapsedCols,
+            [flatColKey]: !isCollapsed,
+          },
+        };
+      });
     };
   }
 
@@ -925,18 +931,25 @@ export class TableRenderer extends Component {
   }
 
   visibleKeys(keys, collapsed, numAttrs, subtotalDisplay) {
-    // если нет стейта свернутых - то все свернуто по дефолту
     const effectiveCollapsed = collapsed || {};
 
-    return keys.filter(
-      key =>
-        !key.some((k, j) => effectiveCollapsed[flatKey(key.slice(0, j))]) &&
-        // Leaf key.
-        (key.length === numAttrs ||
-          flatKey(key) in effectiveCollapsed ||
-          // todo прятать ли сабтоталы
-          !subtotalDisplay.hideOnExpand),
-    );
+    return keys.filter(key => {
+      const isParentCollapsed = key.some((_, j) => {
+        if (j === 0) return false; // First level is always visible
+        const parentKey = flatKey(key.slice(0, j));
+        return effectiveCollapsed[parentKey];
+      });
+
+      if (isParentCollapsed) {
+        return false;
+      }
+
+      const isLeaf = key.length === numAttrs;
+      const hasCollapsedChildren = flatKey(key) in effectiveCollapsed;
+      const showSubtotals = !subtotalDisplay.hideOnExpand;
+
+      return isLeaf || hasCollapsedChildren || showSubtotals;
+    });
   }
 
   isDashboardEditMode() {

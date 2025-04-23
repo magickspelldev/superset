@@ -49,6 +49,12 @@ export const Styles = styled.div`
       font-size: ${theme.typography.sizes.s}px;
       padding: ${theme.gridUnit}px;
       font-weight: ${theme.typography.weights.normal};
+      width: 100px;
+      min-width: 100px;
+      max-width: 100px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     table.pvtTable tbody tr.pvtRowTotals {
@@ -109,6 +115,12 @@ export const Styles = styled.div`
       border-left: 1px solid ${theme.colors.grayscale.light2};
       vertical-align: top;
       text-align: right;
+      width: 100px;
+      min-width: 100px;
+      max-width: 100px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     table.pvtTable tbody tr th.pvtRowLabel {
