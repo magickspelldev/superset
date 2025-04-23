@@ -109,7 +109,7 @@ export class TableRenderer extends Component {
   }
 
   collapseAll() {
-    const { rows, cols, data } = this.props;
+    const { rows, cols, data, formData } = this.props;
     if (rows && rows.length > 0) {
       const collapsedRows = {};
       for (let i = 0; i < rows.length - 1; i += 1) {
@@ -130,8 +130,15 @@ export class TableRenderer extends Component {
 
     if (cols && cols.length > 0) {
       const collapsedCols = {};
+      // нельзя пропускать колонку Метрика - скрывает лишнее
+      const staticColumns = ['Metric'];
+      
       for (let i = 0; i < cols.length - 1; i += 1) {
         const colAttr = cols[i];
+        if (staticColumns.includes(colAttr)) {
+          continue;
+        }
+        
         const uniqueValues = new Set();
         data.forEach(item => {
           if (item[colAttr] !== undefined) {
@@ -932,14 +939,19 @@ export class TableRenderer extends Component {
 
   visibleKeys(keys, collapsed, numAttrs, subtotalDisplay) {
     const effectiveCollapsed = collapsed || {};
+    // нельзя пропускать колонку Метрика
+    // const staticColumns = this.props.formData?.groupbyColumns || [];
+    const staticColumns = ['Metric'];
 
     return keys.filter(key => {
+      if (key.length === 1 && staticColumns.includes(key[0])) {
+        return true;
+      }
       const isParentCollapsed = key.some((_, j) => {
         if (j === 0) return false; // First level is always visible
         const parentKey = flatKey(key.slice(0, j));
         return effectiveCollapsed[parentKey];
       });
-
       if (isParentCollapsed) {
         return false;
       }

@@ -49,9 +49,9 @@ export const Styles = styled.div`
       font-size: ${theme.typography.sizes.s}px;
       padding: ${theme.gridUnit}px;
       font-weight: ${theme.typography.weights.normal};
-      width: 100px;
-      min-width: 100px;
-      max-width: 100px;
+      width: 120px;
+      min-width: 120px;
+      max-width: 120px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -115,9 +115,9 @@ export const Styles = styled.div`
       border-left: 1px solid ${theme.colors.grayscale.light2};
       vertical-align: top;
       text-align: right;
-      width: 100px;
-      min-width: 100px;
-      max-width: 100px;
+      width: 120px;
+      min-width: 120px;
+      max-width: 120px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;

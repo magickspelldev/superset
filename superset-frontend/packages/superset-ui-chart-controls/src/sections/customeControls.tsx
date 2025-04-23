@@ -54,15 +54,15 @@ export function getCustomeControlConfig(
     controlSetRows: [],
   };
 
+  if (vizType === VizTypeCfg.PivotTable) {
+    customeControlConfig.controlSetRows.push(switchTableSpoilerSettings);
+    customeControlConfig.controlSetRows.push(hideRowsSetting);
+  }
   if (vizType === VizTypeCfg.Table || vizType === VizTypeCfg.PivotTable) {
     customeControlConfig.controlSetRows.push(hideColumnssSetting);
   }
   if (vizType === VizTypeCfg.Table) {
     customeControlConfig.controlSetRows.push(hideMetricsSettings);
-  }
-  if (vizType === VizTypeCfg.PivotTable) {
-    customeControlConfig.controlSetRows.push(switchTableSpoilerSettings);
-    customeControlConfig.controlSetRows.push(hideRowsSetting);
   }
 
   if (vizType === VizTypeCfg.Pie || vizType === VizTypeCfg.Sunburst) {
