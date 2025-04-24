@@ -109,7 +109,7 @@ export class TableRenderer extends Component {
   }
 
   collapseAll() {
-    const { rows, cols, data, formData } = this.props;
+    const { rows, cols, data } = this.props;
     if (rows && rows.length > 0) {
       const collapsedRows = {};
       for (let i = 0; i < rows.length - 1; i += 1) {
@@ -132,13 +132,13 @@ export class TableRenderer extends Component {
       const collapsedCols = {};
       // нельзя пропускать колонку Метрика - скрывает лишнее
       const staticColumns = ['Metric'];
-      
+
       for (let i = 0; i < cols.length - 1; i += 1) {
         const colAttr = cols[i];
         if (staticColumns.includes(colAttr)) {
           continue;
         }
-        
+
         const uniqueValues = new Set();
         data.forEach(item => {
           if (item[colAttr] !== undefined) {

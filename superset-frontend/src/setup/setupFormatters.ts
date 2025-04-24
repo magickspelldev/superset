@@ -28,38 +28,14 @@ import {
   createSmartDateFormatter,
   createSmartDateVerboseFormatter,
   createSmartDateDetailedFormatter,
-  NumberFormatter,
 } from '@superset-ui/core';
 import { FormatLocaleDefinition } from 'd3-format';
 import { TimeLocaleDefinition } from 'd3-time-format';
-
-function getNewFormatterRu(key: string, point: number): NumberFormatter {
-  return new NumberFormatter({
-    id: key,
-    formatFunc: (value: number) => {
-      if (value === 0) return '0';
-      let absoluteValue: number;
-      if (point === 1) {
-        absoluteValue = value;
-      } else {
-        absoluteValue = Math.abs(value);
-      }
-      if (absoluteValue >= 1000000000) {
-        return `${(value / 1000000000).toFixed(point)} млрд.`;
-      }
-      if (absoluteValue >= 1000000) {
-        return `${(value / 1000000).toFixed(point)} млн.`;
-      }
-      if (absoluteValue >= 1000) {
-        return `${(value / 1000).toFixed(point)} тыс.`;
-      }
-      return value.toString();
-    },
-    label: 'Russian Number Format',
-    description:
-      'Formats numbers with Russian abbreviations (млн., млрд., тыс.)',
-  });
-}
+import {
+  RuFmt,
+  getNewFormatterSplitter,
+  getNewFormatterRu,
+} from './setupFormatters.helper';
 
 export default function setupFormatters(
   d3NumberFormat: Partial<FormatLocaleDefinition>,
@@ -68,10 +44,18 @@ export default function setupFormatters(
   getNumberFormatterRegistry()
     .setD3Format(d3NumberFormat)
     // Register Russian formats
-    .registerValue('SMART_NUMBER_RU', getNewFormatterRu('SMART_NUMBER_RU', 1))
-    .registerValue('ru,3s', getNewFormatterRu('ru,3s', 3))
-    .registerValue('ru,6s', getNewFormatterRu('ru,6s', 6))
-    .registerValue('ru,9s', getNewFormatterRu('ru,9s', 9))
+    .registerValue(RuFmt.Split, getNewFormatterSplitter(RuFmt.Split, false))
+    .registerValue(
+      RuFmt.SplitDigit,
+      getNewFormatterSplitter(RuFmt.SplitDigit, true),
+    )
+    .registerValue(
+      RuFmt.SmartNumberRu,
+      getNewFormatterRu(RuFmt.SmartNumberRu, 1),
+    )
+    .registerValue(RuFmt.Ru3s, getNewFormatterRu(RuFmt.Ru3s, 3))
+    .registerValue(RuFmt.Ru6s, getNewFormatterRu(RuFmt.Ru6s, 6))
+    .registerValue(RuFmt.Ru9s, getNewFormatterRu(RuFmt.Ru9s, 9))
     // Add shims for format strings that are deprecated or common typos.
     // Temporary solution until performing a db migration to fix this.
     .registerValue(',0', getNumberFormatter(',.4~f'))

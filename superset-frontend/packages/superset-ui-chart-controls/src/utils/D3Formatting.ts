@@ -22,6 +22,7 @@ import {
   NumberFormats,
   getNumberFormatter,
 } from '@superset-ui/core';
+import { RuFmt } from '../../../../src/setup/setupFormatters.helper';
 
 // D3 specific formatting config
 export const D3_FORMAT_DOCS = t(
@@ -36,9 +37,11 @@ export const D3_NUMBER_FORMAT_DESCRIPTION_PERCENTAGE_TEXT = t(
 );
 
 const d3Formatted: [string, string][] = [
-  'ru,3s',
-  'ru,6s',
-  'ru,9s',
+  RuFmt.Split,
+  RuFmt.SplitDigit,
+  RuFmt.Ru3s,
+  RuFmt.Ru6s,
+  RuFmt.Ru9s,
   ',d',
   '$,d',
   '.1s',
